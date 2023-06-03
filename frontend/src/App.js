@@ -4,11 +4,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import Header from './components/Header'
 import { PrivateRoute } from './components/PrivateRoute'
 import Home from './pages/Home'
+import AdminHome from './pages/AdminHome'
 import Login from './pages/Login'
 import NewTicket from './pages/NewTicket'
 import Register from './pages/Register'
 import Tickets from './pages/Tickets'
 import Ticket from './pages/Ticket'
+import UpdateTicket from './pages/UpdateTicket'
 
 function App () {
   return (
@@ -18,6 +20,7 @@ function App () {
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/AdminHome' element={<AdminHome />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/new-ticket' element={<PrivateRoute />}>
@@ -28,6 +31,7 @@ function App () {
             </Route>
             <Route path='/ticket/:ticketId' element={<PrivateRoute />}>
               <Route path='/ticket/:ticketId' element={<Ticket />} />
+              <Route path='/ticket/:ticketId/update' element={<UpdateTicket />} />
             </Route>
           </Routes>
         </div>

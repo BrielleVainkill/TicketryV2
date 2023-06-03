@@ -36,7 +36,9 @@ function Tickets() {
           <div>Date</div>
           <div>Category</div>
           <div>Subject</div>
-          <div>Status</div>
+          <div>Details</div>
+          <div>Status</div> 
+          <div>Delete</div>
           <div></div>
         </div>
         {tickets.map((ticket) => (

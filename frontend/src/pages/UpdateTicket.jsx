@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import BackButton from "../components/BackButton";
-import { getTicket, closeTicket } from "../features/tickets/ticketSlice";
+import {
+  getTicket,
+  closeTicket,
+  updateTicket,
+} from "../features/tickets/ticketSlice";
 import {
   getNotes,
   createNote,
@@ -29,7 +33,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-function Ticket() {
+function UpdateTicket() {
   const options = {
     weekday: "long",
     year: "numeric",
@@ -38,6 +42,8 @@ function Ticket() {
   };
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [noteText, setNoteText] = useState("");
+  const [updatedCategory, setUpdatedCategory] = useState("");
+  const [updatedStatus, setUpdatedStatus] = useState("");
 
   const { ticket, isLoading, isError, message } = useSelector(
     (state) => state.tickets
@@ -89,6 +95,25 @@ function Ticket() {
     closeModal();
   };
 
+  // Update Ticket
+  const onUpdateTicket = () => {
+    const updatedData = {};
+
+    if (updatedCategory) {
+      updatedData.category = updatedCategory;
+      toast.success("Category Updated");
+    }
+
+    if (updatedStatus) {
+      updatedData.status = updatedStatus;
+      toast.success("Status Updated");
+    }
+
+    if (Object.keys(updatedData).length > 0) {
+      dispatch(updateTicket(ticketId, updatedData));
+    }
+  };
+
   return (
     <div className="ticket-page">
       <header className="ticket-header">
@@ -110,6 +135,50 @@ function Ticket() {
           <h3>Description of Issue</h3>
           <p>{ticket.description}</p>
         </div>
+
+        <button onClick={onTicketClose} className="btn btn-sm btn-primary">
+          Save Changes
+        </button>
+
+
+        <div className="update-category">
+        <h3>Update Category</h3>
+        <select
+            value={updatedCategory}
+            onChange={(e) => setUpdatedCategory(e.target.value)}
+          >
+            <option value="">-- Select a Category --</option>
+            <option value="Software Issue">Software Issue</option>
+            <option value="Hardware Issue">Hardware Issue</option>
+            <option value="Servers Down">Servers Down</option>
+            <option value="Assistance Request">Assistance Request</option>
+            <option value="Locked out of PC">Locked out of PC</option>
+            <option value="Projector not working">Projector not working</option>
+          </select>
+        <button onClick={onUpdateTicket} className="btn btn-sm btn-reverse">
+          Update Category
+        </button>
+      </div>
+
+      <div className="update-status">
+        <h3>Update Status</h3>
+        <select
+          value={updatedStatus}
+          onChange={(e) => setUpdatedStatus(e.target.value)}
+        >
+          <option value="">-- Select a Status --</option>
+          <option value="open">Open</option>
+          <option value="in-progress">In Progress</option>
+          <option value="resolved">Resolved</option>
+          <option value="closed">Closed</option>
+        </select>
+        <button onClick={onUpdateTicket} className="btn btn-sm btn-reverse">
+          Update Status
+        </button>
+      </div>
+
+        {/* Notes section */}
+
         <h2>Notes</h2>
       </header>
 
@@ -157,8 +226,9 @@ function Ticket() {
           Close Ticket
         </button>
       )}
+
     </div>
   );
 }
 
-export default Ticket;
+export default UpdateTicket;
