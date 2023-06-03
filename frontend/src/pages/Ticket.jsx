@@ -51,6 +51,12 @@ function Ticket() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const onUpdateButtonClick = () => {
+    const currentUrl = window.location.pathname;
+    const updatedUrl = `${currentUrl}/update`;
+    window.location.href = updatedUrl;
+  };
+
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -89,6 +95,7 @@ function Ticket() {
     closeModal();
   };
 
+  
   return (
     <div className="ticket-page">
       <header className="ticket-header">
@@ -110,6 +117,13 @@ function Ticket() {
           <h3>Description of Issue</h3>
           <p>{ticket.description}</p>
         </div>
+
+        {ticket.status !== "close" && (
+          <button onClick={onUpdateButtonClick} className="btn btn-sm btn-primary">
+            Update
+          </button>
+        )}
+
         <h2>Notes</h2>
       </header>
 

@@ -42,24 +42,24 @@ const getTicket = async (ticketId, token) => {
 }
 
 // Update ticket
-const updateTicket = async (ticketId, status, category, token) => {
+const updateTicket = async (ticketId, updatedStatus, updatedCategory, token) => {
+  
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   }
 
-  const updateData = {}
-  if (status) {
-    updateData.status = status
+  const updatedData = {}
+  if (updatedStatus) {
+    updatedData.status = updatedStatus
   }
-  if (category) {
-    updateData.category = category
+  if (updatedCategory) {
+    updatedData.category = updatedCategory
   }
-
   const response = await axios.put(
     API_URL + ticketId,
-    updateData,
+    updatedData,
     config)
 
   return response.data
@@ -75,7 +75,7 @@ const closeTicket = async (ticketId, token) => {
 
   const response = await axios.put(
     API_URL + ticketId,
-    { status: 'close' },
+    { status: 'closed' },
     config
   )
 

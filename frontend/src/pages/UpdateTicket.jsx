@@ -101,11 +101,13 @@ function UpdateTicket() {
 
     if (updatedCategory) {
       updatedData.category = updatedCategory;
+      window.location.reload();
       toast.success("Category Updated");
     }
 
     if (updatedStatus) {
       updatedData.status = updatedStatus;
+      window.location.reload();
       toast.success("Status Updated");
     }
 
@@ -136,11 +138,6 @@ function UpdateTicket() {
           <p>{ticket.description}</p>
         </div>
 
-        <button onClick={onTicketClose} className="btn btn-sm btn-primary">
-          Save Changes
-        </button>
-
-
         <div className="update-category">
         <h3>Update Category</h3>
         <select
@@ -170,7 +167,6 @@ function UpdateTicket() {
           <option value="open">Open</option>
           <option value="in-progress">In Progress</option>
           <option value="resolved">Resolved</option>
-          <option value="closed">Closed</option>
         </select>
         <button onClick={onUpdateTicket} className="btn btn-sm btn-reverse">
           Update Status
